@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+
 import Items from "./pages/Items";
 import Expenses from "./pages/Expenses";
 import Receipts from "./pages/Receipts";
@@ -12,9 +13,12 @@ export default function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
+        {/* ✅ DEFAULT ROUTE */}
+        <Route path="/" element={<Navigate to="/items" />} />
+
         <Route path="/items" element={<Items />} />
         <Route path="/expenses" element={<Expenses />} />
-	<Route path="/receipts/new" element={<ReceiptCreate />} />
+        <Route path="/receipts/new" element={<ReceiptCreate />} />
         <Route path="/receipts/edit/:id" element={<ReceiptCreate />} />
         <Route path="/receipts" element={<Receipts />} />
         <Route path="/invoices" element={<Invoices />} />
