@@ -12,8 +12,8 @@ import ReceiptCreate from "./pages/ReceiptCreate";
 import Invoices from "./pages/Invoices";
 import Reports from "./pages/Reports";
 
-import CustomerOverview from "./pages/CustomerOverview";
-import SalesAnalysis from "./pages/SalesAnalysis";
+import CustomerOverview from "./pages/analysis/CustomerOverview";
+import SalesAnalysis from "./pages/analysis/SalesAnalysis";
 import LocationOverview from "./pages/LocationOverview";
 
 export default function App() {
@@ -33,8 +33,8 @@ export default function App() {
           <Route path="/invoices" element={<Invoices />} />
           <Route path="/reports" element={<Reports />} />
 
-          <Route path="/customers" element={<CustomerOverview />} />
-          <Route path="/sales-analysis" element={<SalesAnalysis />} />
+          <Route path="/analysis/customers" element={<CustomerOverview />} />
+          <Route path="/analysis/sales" element={<SalesAnalysis />} />
           <Route path="/locations" element={<LocationOverview />} />
         </Route>
       </Routes>

@@ -1,20 +1,10 @@
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
-export default function Sidebar({ open, onClose }) {
-  const [openInventory, setOpenInventory] = useState(true);
-
-  const linkClass = ({ isActive }) =>
-    `block px-4 py-2 rounded ${
-      isActive
-        ? "bg-blue-600 text-white"
-        : "hover:bg-gray-100"
-    }`;
-
+export default function Sidebar({ isOpen, onClose }) {
   return (
     <>
       {/* Backdrop */}
-      {open && (
+      {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40"
           onClick={onClose}
@@ -23,59 +13,56 @@ export default function Sidebar({ open, onClose }) {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white z-50 transform transition-transform duration-300
-        ${open ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed top-0 left-0 h-full w-64 bg-gray-900 text-white z-50 transform transition-transform duration-300
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        {/* Header */}
-        <div className="h-14 flex items-center justify-between px-4 border-b">
-          <span className="font-bold">Menu</span>
-          <button onClick={onClose}>✕</button>
+        <div className="p-4 font-bold text-lg border-b border-gray-700">
+          GlowGear Dashboard
         </div>
 
-        {/* Content */}
-        <div className="p-4 space-y-4">
-          {/* Inventory */}
-          <button
-            onClick={() => setOpenInventory(!openInventory)}
-            className="font-semibold w-full text-left"
-          >
-            Inventory
-          </button>
+        <nav className="p-4 space-y-3">
+          <SidebarGroup title="Inventory">
+            <SidebarLink to="/items" onClick={onClose}>Items</SidebarLink>
+            <SidebarLink to="/expenses" onClick={onClose}>Expenses</SidebarLink>
+            <SidebarLink to="/receipts" onClick={onClose}>Receipts</SidebarLink>
+            <SidebarLink to="/invoices" onClick={onClose}>Invoices</SidebarLink>
+            <SidebarLink to="/reports" onClick={onClose}>Reports</SidebarLink>
+          </SidebarGroup>
 
-          {openInventory && (
-            <div className="ml-2 space-y-1">
-              <NavLink to="/items" className={linkClass} onClick={onClose}>
-                Items
-              </NavLink>
-              <NavLink to="/expenses" className={linkClass} onClick={onClose}>
-                Expenses
-              </NavLink>
-              <NavLink to="/receipts" className={linkClass} onClick={onClose}>
-                Receipts
-              </NavLink>
-              <NavLink to="/invoices" className={linkClass} onClick={onClose}>
-                Invoices
-              </NavLink>
-              <NavLink to="/reports" className={linkClass} onClick={onClose}>
-                Reports
-              </NavLink>
-            </div>
-          )}
+          <SidebarLink to="/analysis/customers" onClick={onClose}>
+            Customer Profile Overview
+          </SidebarLink>
 
-          {/* Other Sections */}
-          <div className="space-y-1 pt-4 border-t">
-            <NavLink to="/customers" className={linkClass} onClick={onClose}>
-              Customer Profile Overview
-            </NavLink>
-            <NavLink to="/sales-analysis" className={linkClass} onClick={onClose}>
-              Sales Analysis
-            </NavLink>
-            <NavLink to="/locations" className={linkClass} onClick={onClose}>
-              Location Profile Overview
-            </NavLink>
-          </div>
-        </div>
+          <SidebarLink to="/analysis/sales" onClick={onClose}>
+            Sales Analysis
+          </SidebarLink>
+
+          <SidebarLink to="/analysis/location" onClick={onClose}>
+            Location Profile Overview
+          </SidebarLink>
+        </nav>
       </aside>
     </>
+  );
+}
+
+function SidebarGroup({ title, children }) {
+  return (
+    <div>
+      <p className="text-sm text-gray-400 mb-1">{title}</p>
+      <div className="ml-2 space-y-2">{children}</div>
+    </div>
+  );
+}
+
+function SidebarLink({ to, onClick, children }) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      className="block hover:text-blue-400 transition"
+    >
+      {children}
+    </Link>
   );
 }
